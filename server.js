@@ -64,13 +64,27 @@ app.get('/api/candidate/:id', (req, res) => {
     })
 })
 
-// // DELETE a candidate
-// db.query(`DELETE FROM candidates WHERE id = ?`, 1, (err, result) => {
-//     if (err) {
-//         console.log(err);
-//     }
-//     console.log(result);
-// });
+// DELETE a candidate
+app.delete('/api/candidate/:id', (req, res) => {
+    const sql = `DELETE FROM candidates WHERE id = ?`;
+    const params = [req.params.id];
+
+    db.query(sql, params, (err, result) => {
+        if (err) {
+            res.statusMessage(400).json({ error: res.message });
+        } else if (!result.affectedRows) {
+            res.json({
+                message: 'Candidate not found.'
+            });
+        } else {
+            res.json({
+                message: 'Deleted.',
+                changes: result.affectedRows,
+                id: req.params.id
+            });
+        }
+    });
+});
 
 // // CREATE a candidate
 // const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected)
