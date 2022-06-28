@@ -21,19 +21,48 @@ const db = mysql.createConnection(
     console.log('Connected to the election database.')
 );
 
-// // return all data in the candidates table
-// db.query(`SELECT * FROM candidates`, (err, rows) => {
-//     console.log(rows);
-//     // execute the callbakc with all the resulting rows that match the query
+// API ROUTES (endpoints)
+
+// TEST CONNECTION
+// app.get('/', (req, res) => {
+//     res.json({
+//         message: 'Hello World'
+//     });
 // });
 
-// // GET a single candidate
-// db.query(`SELECT * FROM candidates WHERE id = 11`, (err, row) => {
-//     if (err) {
-//         console.log(err);
-//     }
-//     console.log(row);
-// });
+// return all data in the candidates table
+app.get('/api/candidates', (req, res) => {
+    const sql = `SELECT * FROM candidates`;
+
+    db.query(sql, (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        // execute the callbakc with all the resulting rows that match the query
+        res.json({
+            message: 'success',
+            data: rows
+        });
+    });
+});
+
+// GET a single candidate
+app.get('/api/candidate/:id', (req, res) => {
+    const sql = `SELECT * FROM candidates WHERE id = ?`;
+    const params = [req.params.id];
+
+    db.query(sql, params, (err, row) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({
+            message: 'sucess',
+            data: row
+        })
+    })
+})
 
 // // DELETE a candidate
 // db.query(`DELETE FROM candidates WHERE id = ?`, 1, (err, result) => {
