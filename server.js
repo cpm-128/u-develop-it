@@ -21,8 +21,39 @@ const db = mysql.createConnection(
     console.log('Connected to the election database.')
 );
 
-// GET routes
+// // return all data in the candidates table
+// db.query(`SELECT * FROM candidates`, (err, rows) => {
+//     console.log(rows);
+//     // execute the callbakc with all the resulting rows that match the query
+// });
 
+// // GET a single candidate
+// db.query(`SELECT * FROM candidates WHERE id = 11`, (err, row) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(row);
+// });
+
+// // DELETE a candidate
+// db.query(`DELETE FROM candidates WHERE id = ?`, 1, (err, result) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(result);
+// });
+
+// // CREATE a candidate
+// const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected)
+//             VALUES (?, ?, ?, ?)`;
+// const params = [1, 'Ronald', 'Firbank', 1];
+
+// db.query(sql, params, (err, result) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(result);
+// });
 
 // Default response for any reuqests that are Not Found
 app.use((req, res) => {
