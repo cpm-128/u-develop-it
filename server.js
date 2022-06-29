@@ -1,6 +1,4 @@
 const express = require('express');
-const inputCheck = require('./utils/inputCheck');
-
 const db = require('./db/connection');
 const apiRoutes = require('./routes/apiRoutes');
 
@@ -11,9 +9,9 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// API ROUTES (endpoints)
 app.use('/api', apiRoutes);
 
-// API ROUTES (endpoints)
 
 // TEST CONNECTION
 // app.get('/', (req, res) => {
@@ -27,7 +25,7 @@ app.use((req, res) => {
     res.status(404).end();
 });
 
-//listen for port
+//listen for port and start server after db connection
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });

@@ -1,7 +1,7 @@
 {
   "name": "u-develop-it",
   "version": "1.0.0",
-  "description": "MySQL database",
+  "description": "MySQL database with back-end APIs for a voting app.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
