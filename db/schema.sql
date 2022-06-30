@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS votes;
 DROP TABLE IF EXISTS candidates;
 DROP TABLE IF EXISTS parties;
 DROP TABLE IF EXISTS voters;
@@ -29,4 +30,16 @@ CREATE TABLE voters (
     email VARCHAR(50) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     -- the time will be based on what time it is according to your server
+);
+
+CREATE TABLE votes (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    voter_id INTEGER NOT NULL,
+    candidate_id INTEGER NOT NULL,
+    created_ad DATETIME DEFAULT CURRENT_TIMESTAMP,
+    -- voter_id must be unique
+    CONSTRAINT uc_voter UNIQUE (voter_id),
+    CONSTRAINT fk_voter FOREIGN KEY (voter_id) REFERENCES voters(id) ON DELETE CASCADE,
+    CONSTRAINT fk_candidate FOREIGN KEY (candidate_id) REFERENCES candidates(id) ON DELETE CASCADE
+    -- ON DELETE CASCASE: if voter_id or candidate_id is delete from their primary table, the row here will be deleted as well
 );
